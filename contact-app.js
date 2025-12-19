@@ -24,28 +24,23 @@ class ErrorBoundary extends React.Component {
 
 function ContactPage() {
   try {
-    const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      alert('Thank you for your message! We will get back to you soon.');
-      setFormData({ name: '', email: '', message: '' });
-    };
-
+    useScrollAnimation();
+    
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen transition-colors duration-300" style={{backgroundColor: 'var(--background)'}}>
+        <DarkModeToggle />
         <Header />
         
-        <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-[var(--primary-color)]/10 to-white">
+        <section className="pt-32 pb-16 px-6 transition-colors duration-300" style={{background: 'linear-gradient(to bottom right, rgba(168, 230, 207, 0.1), var(--background))'}}>
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl font-bold mb-6">Get In Touch</h1>
-            <p className="text-xl text-[var(--text-secondary)]">We're here to help with any questions</p>
+            <h1 className="text-5xl font-bold mb-6" data-animate="animate-fadeInUp">Get In Touch</h1>
+            <p className="text-xl text-[var(--text-secondary)]" data-animate="animate-fadeInUp">We're here to help with any questions</p>
           </div>
         </section>
 
         <section className="py-16 px-6">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
-            <div>
+            <div data-animate="animate-slideInLeft">
               <h2 className="text-3xl font-bold mb-8">Contact Information</h2>
               <div className="space-y-6">
                 <div className="flex items-start">
@@ -78,16 +73,15 @@ function ContactPage() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg">
+            <div data-animate="animate-slideInRight" className="rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift text-center" style={{background: 'linear-gradient(to bottom right, var(--hover-bg), var(--card-background))'}}>
               <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <input type="text" placeholder="Your Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                <input type="email" placeholder="Your Email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                <textarea placeholder="Your Message" value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} rows="5" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required></textarea>
-                <button type="submit" className="w-full px-6 py-3 rounded-full font-medium" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
-                  Send Message
-                </button>
-              </form>
+              <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
+                Have a question or need assistance? We're here to help. Click below to send us a message.
+              </p>
+              <a href="https://tally.so/r/rj5ZKv" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-8 py-4 rounded-full font-medium text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
+                <div className="icon-send text-xl mr-3"></div>
+                Contact Us
+              </a>
             </div>
           </div>
         </section>

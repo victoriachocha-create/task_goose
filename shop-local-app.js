@@ -24,8 +24,11 @@ class ErrorBoundary extends React.Component {
 
 function ShopLocalPage() {
   try {
+    useScrollAnimation();
+    
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen transition-colors duration-300" style={{backgroundColor: 'var(--background)'}}>
+        <DarkModeToggle />
         <Header />
         <ShopLocal />
         <Footer />

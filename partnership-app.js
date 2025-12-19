@@ -24,21 +24,8 @@ class ErrorBoundary extends React.Component {
 
 function PartnershipPage() {
   try {
-    const [formData, setFormData] = React.useState({
-      organizationName: '',
-      contactPerson: '',
-      position: '',
-      email: '',
-      phone: '',
-      partnershipType: '',
-      description: '',
-      website: '',
-      socialLinks: '',
-      preferredDate: ''
-    });
-    const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [showSuccess, setShowSuccess] = React.useState(false);
-
+    useScrollAnimation();
+    
     const categories = [
       { icon: 'briefcase', title: 'Corporate & Institutional Alliances', desc: 'Partner with established corporations and institutions' },
       { icon: 'truck', title: 'Logistics & Last-Mile Collaborations', desc: 'Integrate delivery and logistics solutions' },
@@ -55,46 +42,15 @@ function PartnershipPage() {
       'Contribute to job creation and community empowerment'
     ];
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setIsSubmitting(true);
-      
-      try {
-        await trickleCreateObject('partnership', {
-          OrganizationName: formData.organizationName,
-          ContactPerson: formData.contactPerson,
-          Position: formData.position,
-          Email: formData.email,
-          Phone: formData.phone,
-          PartnershipType: formData.partnershipType,
-          Description: formData.description,
-          Website: formData.website,
-          SocialLinks: formData.socialLinks,
-          PreferredMeetingDate: formData.preferredDate,
-          Status: 'Pending Review'
-        });
-        
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          setFormData({ organizationName: '', contactPerson: '', position: '', email: '', phone: '', partnershipType: '', description: '', website: '', socialLinks: '', preferredDate: '' });
-        }, 5000);
-      } catch (error) {
-        console.error('Error submitting partnership:', error);
-        alert('Failed to submit. Please try again.');
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
-
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen transition-colors duration-300" style={{backgroundColor: 'var(--background)'}}>
+        <DarkModeToggle />
         <Header />
         
-        <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-[var(--primary-color)]/10 to-white">
+        <section className="pt-32 pb-16 px-6 transition-colors duration-300" style={{background: 'linear-gradient(to bottom right, rgba(168, 230, 207, 0.1), var(--background))'}}>
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl font-bold mb-6">Partner with TaskGoose</h1>
-            <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
+            <h1 className="text-5xl font-bold mb-6" data-animate="animate-fadeInUp">Partner with TaskGoose</h1>
+            <p className="text-xl text-[var(--text-secondary)] leading-relaxed" data-animate="animate-fadeInUp">
               At TaskGoose, we believe collaboration powers impact. We partner with forward-thinking brands, institutions, and innovators to transform how individuals and businesses manage their daily operations.
             </p>
           </div>
@@ -102,20 +58,20 @@ function PartnershipPage() {
 
         <section className="py-16 px-6">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Partnership Categories</h2>
+            <h2 className="text-3xl font-bold text-center mb-12" data-animate="animate-fadeInUp">Partnership Categories</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
               {categories.map((cat, idx) => (
-                <div key={idx} className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{backgroundColor: 'var(--primary-color)'}}>
-                    <div className={`icon-${cat.icon} text-2xl text-[var(--accent-color)]`}></div>
+                <div key={idx} data-animate="animate-fadeInUp" style={{animationDelay: `${idx * 0.1}s`}} className="rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift group cursor-pointer" style={{background: 'linear-gradient(to bottom right, var(--hover-bg), var(--card-background))'}}>
+                  <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: 'var(--primary-color)'}}>
+                    <div className={`icon-${cat.icon} text-2xl text-white`}></div>
                   </div>
-                  <h3 className="text-lg font-bold mb-2">{cat.title}</h3>
-                  <p className="text-sm text-[var(--text-secondary)]">{cat.desc}</p>
+                  <h3 className="text-lg font-bold mb-2 group-hover:text-[var(--primary-color)] transition-colors duration-300">{cat.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors duration-300">{cat.desc}</p>
                 </div>
               ))}
             </div>
 
-            <div className="bg-gradient-to-br from-[var(--primary-color)]/5 to-white rounded-3xl p-8 md:p-12 mb-16">
+            <div className="bg-gradient-to-br from-[var(--primary-color)]/5 to-white rounded-3xl p-8 md:p-12 mb-16" data-animate="animate-fadeInUp">
               <h2 className="text-3xl font-bold mb-6">Why Partner with Us</h2>
               <ul className="space-y-4">
                 {benefits.map((benefit, idx) => (
@@ -129,50 +85,18 @@ function PartnershipPage() {
           </div>
         </section>
 
-        <section className="py-16 px-6 bg-gray-50">
-          <div className="max-w-3xl mx-auto">
-            {showSuccess ? (
-              <div className="bg-white rounded-3xl p-12 text-center shadow-xl">
-                <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6" style={{backgroundColor: 'var(--primary-color)'}}>
-                  <div className="icon-check text-4xl text-[var(--accent-color)]"></div>
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Thank you for your interest!</h3>
-                <p className="text-lg text-[var(--text-secondary)]">
-                  Our partnerships team will review your proposal and reach out within 5–7 working days to discuss possible collaboration pathways.
-                </p>
-              </div>
-            ) : (
-              <div className="bg-white rounded-3xl p-8 shadow-xl">
-                <h2 className="text-3xl font-bold mb-6 text-center">Submit a Partnership Proposal</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <input type="text" placeholder="Organization Name *" value={formData.organizationName} onChange={(e) => setFormData({...formData, organizationName: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="Contact Person *" value={formData.contactPerson} onChange={(e) => setFormData({...formData, contactPerson: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                    <input type="text" placeholder="Position *" value={formData.position} onChange={(e) => setFormData({...formData, position: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <input type="email" placeholder="Email *" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                    <input type="tel" placeholder="Phone" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" />
-                  </div>
-                  <select value={formData.partnershipType} onChange={(e) => setFormData({...formData, partnershipType: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required>
-                    <option value="">Type of Partnership *</option>
-                    <option value="Corporate">Corporate</option>
-                    <option value="Logistics">Logistics</option>
-                    <option value="Tech">Tech</option>
-                    <option value="Lifestyle">Lifestyle</option>
-                    <option value="NGO/CSR">NGO/CSR</option>
-                    <option value="Other">Other</option>
-                  </select>
-                  <textarea placeholder="Brief Description of Proposed Collaboration *" value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows="4" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required></textarea>
-                  <input type="url" placeholder="Website" value={formData.website} onChange={(e) => setFormData({...formData, website: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" />
-                  <input type="text" placeholder="Social Links" value={formData.socialLinks} onChange={(e) => setFormData({...formData, socialLinks: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" />
-                  <input type="date" placeholder="Preferred Meeting Date" value={formData.preferredDate} onChange={(e) => setFormData({...formData, preferredDate: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" />
-                  <button type="submit" disabled={isSubmitting} className="w-full px-6 py-4 rounded-full font-medium text-lg" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
-                    {isSubmitting ? 'Submitting...' : '👉 Submit Partnership Proposal'}
-                  </button>
-                </form>
-              </div>
-            )}
+        <section className="py-16 px-6 transition-colors duration-300" style={{backgroundColor: 'var(--hover-bg)'}}>
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="rounded-3xl p-12 shadow-xl transition-colors duration-300" style={{backgroundColor: 'var(--card-background)'}}>
+              <h2 className="text-3xl font-bold mb-6">Ready to Partner with TaskGoose?</h2>
+              <p className="text-lg text-[var(--text-secondary)] mb-8 leading-relaxed">
+                Join forces with us to build the future of smart living. Submit your partnership proposal and let's create impact together.
+              </p>
+              <a href="https://tally.so/r/PdpQ8Q" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
+                <div className="icon-send text-xl mr-3"></div>
+                Submit a Partnership Proposal
+              </a>
+            </div>
           </div>
         </section>
 

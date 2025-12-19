@@ -34,8 +34,11 @@ function App() {
   try {
     const [bookingModalOpen, setBookingModalOpen] = React.useState(false);
     const [signupModalOpen, setSignupModalOpen] = React.useState(false);
+    const [categoryBubblesOpen, setCategoryBubblesOpen] = React.useState(false);
+    const [userGuideOpen, setUserGuideOpen] = React.useState(false);
     const [selectedCategory, setSelectedCategory] = React.useState('');
     const [selectedRole, setSelectedRole] = React.useState('');
+    const goosistantRef = React.useRef(null);
 
     const openBookingModal = (category = '') => {
       setSelectedCategory(category);
@@ -47,17 +50,35 @@ function App() {
       setSignupModalOpen(true);
     };
 
+    const handleCategorySelect = (category) => {
+      openBookingModal(category);
+    };
+
     return (
-      <div className="min-h-screen bg-white" data-name="app" data-file="app.js">
+      <div className="min-h-screen bg-[var(--background)] transition-colors duration-300" data-name="app" data-file="app.js">
+        <DarkModeToggle />
+        <Goosistant ref={goosistantRef} />
+        <ReferralBanner />
         <Header onBookTask={() => openBookingModal()} />
-        <Hero onBookTask={() => openBookingModal()} onJoinGoosePro={() => openSignupModal('GoosePro')} />
-        <UserGroups />
+        <Hero 
+          onBookTask={() => openBookingModal()} 
+          onJoinGoosePro={() => openSignupModal('GoosePro')}
+          onOpenGoosistant={() => goosistantRef.current?.handleOpen()}
+        />
+        <SignupCTA />
+        <SuccessMetrics />
         <Categories onBookTask={(category) => openBookingModal(category)} />
-        <HowItWorks />
+        <UserGroups />
+        <HowItWorks onOpenGoosistant={() => goosistantRef.current?.handleOpen()} />
+        <AIFeatures />
+        <TrustedBy />
         <Testimonials />
-        <Footer />
+        <Newsletter />
+        <Footer onOpenUserGuide={() => setUserGuideOpen(true)} />
         <BookingModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} category={selectedCategory} />
         <SignupModal isOpen={signupModalOpen} onClose={() => setSignupModalOpen(false)} defaultRole={selectedRole} />
+        <CategoryBubblesModal isOpen={categoryBubblesOpen} onClose={() => setCategoryBubblesOpen(false)} onCategorySelect={handleCategorySelect} />
+        <UserGuideModal isOpen={userGuideOpen} onClose={() => setUserGuideOpen(false)} onBookNow={() => openBookingModal()} />
       </div>
     );
   } catch (error) {

@@ -1,5 +1,7 @@
 function UserGroups() {
   try {
+    useScrollAnimation();
+    
     const groups = [
       {
         title: 'For Individuals',
@@ -22,19 +24,23 @@ function UserGroups() {
     ];
 
     return (
-      <section className="section-padding bg-white" data-name="user-groups" data-file="components/UserGroups.js">
+        <section className="py-32 px-6 transition-colors duration-300" style={{backgroundColor: 'var(--background)'}} data-name="user-groups" data-file="components/UserGroups.js">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16">Who We Serve</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <h2 className="text-5xl font-bold text-center mb-6 text-reveal" style={{letterSpacing: '-0.02em'}}>Who We Serve</h2>
+          <p className="text-xl text-center text-[var(--text-secondary)] mb-20 max-w-3xl mx-auto font-light text-reveal">Built for homes, businesses, and communities. No matter who you are, we make life lighter with zero stress.</p>
+          <div className="grid md:grid-cols-3 gap-8" data-stagger-container>
             {groups.map((group, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{backgroundColor: 'var(--primary-color)'}}>
-                  <div className={`icon-${group.icon} text-2xl text-[var(--accent-color)]`}></div>
+              <a key={idx} href={group.title === 'For Individuals' ? 'https://tally.so/r/vGM8QD' : group.title === 'For Partners' ? 'https://tally.so/r/PdpWgQ' : 'corporate.html'} target={group.title !== 'For Businesses' ? '_blank' : '_self'} rel="noopener noreferrer" className="stagger-item rounded-2xl p-8 shadow-lg card-hover border border-gray-200 dark:border-gray-700 group cursor-pointer" style={{backgroundColor: 'var(--background)'}}>
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-500" style={{backgroundColor: 'var(--primary-color)'}}>
+                  <div className={`icon-${group.icon} text-2xl text-white`}></div>
                 </div>
-                <img src={group.image} alt={group.title} className="w-full h-48 object-cover rounded-xl mb-6" />
-                <h3 className="text-2xl font-semibold mb-3">{group.title}</h3>
-                <p className="text-[var(--text-secondary)]">{group.description}</p>
-              </div>
+                <div className="relative overflow-hidden rounded-xl mb-6">
+                  <img src={group.image} alt={group.title} className="w-full h-48 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                <h3 className="text-2xl font-semibold mb-3 group-hover:text-[var(--primary-color)] transition-all duration-500">{group.title}</h3>
+                <p className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-all duration-500">{group.description}</p>
+              </a>
             ))}
           </div>
         </div>

@@ -1,7 +1,13 @@
-function AnimatedGoose() {
+function AnimatedGoose({ onClick }) {
   try {
     return (
-      <div className="inline-block animate-bounce" data-name="animated-goose" data-file="components/AnimatedGoose.js">
+      <div 
+        className="inline-block animate-bounce cursor-pointer hover:scale-110 transition-transform duration-300" 
+        data-name="animated-goose" 
+        data-file="components/AnimatedGoose.js"
+        onClick={onClick}
+        title="Chat with Goosistant"
+      >
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M24 4C18.477 4 14 8.477 14 14V20C14 22.209 15.791 24 18 24H30C32.209 24 34 22.209 34 20V14C34 8.477 29.523 4 24 4Z" fill="#A8E6CF"/>
           <circle cx="20" cy="16" r="2" fill="#1A202C"/>

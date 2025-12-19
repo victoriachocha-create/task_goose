@@ -4,13 +4,18 @@ function SignupModal({ isOpen, onClose, defaultRole = '' }) {
       fullName: '',
       email: '',
       phoneNumber: '',
+      location: '',
+      accountType: '',
+      serviceCategory: '',
+      experienceLevel: '',
+      idVerification: null,
       role: defaultRole,
       serviceInterest: []
     });
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [showSuccess, setShowSuccess] = React.useState(false);
 
-    const serviceOptions = ['HomeCare', 'FamilyCare', 'BizSupport', 'MoveEase', 'FixIt', 'GooseLife Concierge', 'Goose Shopper', 'Goosepreneur'];
+    const serviceOptions = ['HomeCare', 'Fix-It', 'Beauty & Lifestyle', 'FamilyCare', 'MoveEase', 'GooseLife Errands', 'GoosePaw', 'SafeNest', 'Cleaning & Housekeeping', 'Home Management', 'House Sitting', 'Meal Prep', 'Interior Decorators', 'Gardening', 'Handymen', 'Electricians', 'Plumbers', 'Painters', 'Repairs & Maintenance', 'Yard Maintainers', 'Hair Vendors', 'Hair Stylists/Salons', 'Makeup Artists', 'Nail Technicians', 'Spa Services', 'Elderly Care', 'Hospital Bed Watch', 'Special Needs Support', 'Home Relocation', 'Office Relocation', 'Packing & Unpacking', 'Furniture Assembly', 'Move-In/Out Cleaning', 'Grocery Shopping & Delivery', 'Errands', 'Medicine Pickup', 'Event Planning', 'Travel Coordination', 'Dry Cleaning', 'Pet Sitting', 'Pet Walking', 'Pet Grooming', 'Smart Home Installation', 'Surveillance Setup', 'Security System Maintenance', 'Safety Management', 'Other'];
 
     const handleServiceToggle = (service) => {
       setFormData(prev => ({
@@ -19,6 +24,36 @@ function SignupModal({ isOpen, onClose, defaultRole = '' }) {
           ? prev.serviceInterest.filter(s => s !== service)
           : [...prev.serviceInterest, service]
       }));
+    };
+
+    const handleFileChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        setFormData({...formData, idVerification: file});
+      }
+    };
+
+    const sendToGoogleSheets = async (data) => {
+      const formDataToSend = new FormData();
+      formDataToSend.append('FullName', data.fullName);
+      formDataToSend.append('Email', data.email);
+      formDataToSend.append('PhoneNumber', data.phoneNumber);
+      formDataToSend.append('Location', data.location);
+      formDataToSend.append('AccountType', data.accountType);
+      formDataToSend.append('ServiceCategory', data.serviceCategory);
+      formDataToSend.append('ExperienceLevel', data.experienceLevel);
+      formDataToSend.append('Role', data.role);
+      
+      const sheetUrl = 'https://script.google.com/macros/s/AKfycbxBd8TYHqFl4vKQVXMh9DsXqJ0oFZq5xPqLzQm6NeHXJw/exec';
+      
+      try {
+        await fetch(sheetUrl, {
+          method: 'POST',
+          body: formDataToSend
+        });
+      } catch (error) {
+        console.error('Error sending to Google Sheets:', error);
+      }
     };
 
     const handleSubmit = async (e) => {
@@ -30,15 +65,21 @@ function SignupModal({ isOpen, onClose, defaultRole = '' }) {
           FullName: formData.fullName,
           Email: formData.email,
           PhoneNumber: formData.phoneNumber,
+          Location: formData.location,
+          AccountType: formData.accountType,
+          ServiceCategory: formData.serviceCategory,
+          ExperienceLevel: formData.experienceLevel,
           Role: formData.role,
           ServiceInterest: formData.serviceInterest.join(',')
         });
+        
+        await sendToGoogleSheets(formData);
         
         setShowSuccess(true);
         setTimeout(() => {
           onClose();
           setShowSuccess(false);
-          setFormData({ fullName: '', email: '', phoneNumber: '', role: '', serviceInterest: [] });
+          setFormData({ fullName: '', email: '', phoneNumber: '', location: '', accountType: '', serviceCategory: '', experienceLevel: '', idVerification: null, role: '', serviceInterest: [] });
         }, 3000);
       } catch (error) {
         console.error('Error creating user:', error);
@@ -52,11 +93,11 @@ function SignupModal({ isOpen, onClose, defaultRole = '' }) {
 
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
-        <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transition-colors duration-300" style={{backgroundColor: 'var(--card-background)'}} onClick={(e) => e.stopPropagation()}>
           <div className="p-8">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold">Join TaskGoose</h2>
-              <button onClick={onClose} className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100">
+              <h2 className="text-3xl font-bold">Join TaskGoose Professional Network</h2>
+              <button onClick={onClose} className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
                 <div className="icon-x text-2xl"></div>
               </button>
             </div>
@@ -72,28 +113,33 @@ function SignupModal({ isOpen, onClose, defaultRole = '' }) {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input type="text" placeholder="Full Name *" value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                <input type="email" placeholder="Email *" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                <input type="tel" placeholder="Phone Number (optional)" value={formData.phoneNumber} onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" />
-                <select value={formData.role} onChange={(e) => setFormData({...formData, role: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required>
-                  <option value="">Select Role *</option>
-                  <option value="Smart Tasker">Smart Tasker</option>
-                  <option value="GoosePro">GoosePro</option>
-                  <option value="Goosepreneur">Goosepreneur</option>
-                  <option value="GooseShopper">GooseShopper</option>
+                <input type="email" placeholder="Email Address *" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
+                <input type="tel" placeholder="Phone Number *" value={formData.phoneNumber} onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
+                <input type="text" placeholder="Location/City *" value={formData.location} onChange={(e) => setFormData({...formData, location: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
+                <select value={formData.accountType} onChange={(e) => setFormData({...formData, accountType: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required>
+                  <option value="">Account Type *</option>
+                  <option value="Business Account">Register as Business Account</option>
+                  <option value="Freelancer">Register as Freelancer</option>
+                </select>
+                <select value={formData.serviceCategory} onChange={(e) => setFormData({...formData, serviceCategory: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required>
+                  <option value="">Service Category *</option>
+                  {serviceOptions.map(service => (
+                    <option key={service} value={service}>{service}</option>
+                  ))}
+                </select>
+                <select value={formData.experienceLevel} onChange={(e) => setFormData({...formData, experienceLevel: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required>
+                  <option value="">Experience Level *</option>
+                  <option value="Beginner">Beginner (0-1 years)</option>
+                  <option value="Intermediate">Intermediate (2-5 years)</option>
+                  <option value="Expert">Expert (5+ years)</option>
                 </select>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Service Interest</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {serviceOptions.map(service => (
-                      <label key={service} className="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" checked={formData.serviceInterest.includes(service)} onChange={() => handleServiceToggle(service)} className="w-4 h-4" />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
+                  <label className="block text-sm font-medium mb-2">ID Verification (Upload Document) *</label>
+                  <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
+                  <p className="text-xs text-gray-500 mt-1">Accepted formats: PDF, JPG, PNG</p>
                 </div>
-                <button type="submit" disabled={isSubmitting} className="w-full px-6 py-4 rounded-full font-medium text-lg" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
-                  {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+                <button type="submit" disabled={isSubmitting} className="w-full px-6 py-4 rounded-full font-medium text-lg hover:shadow-xl transition-all" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
+                  {isSubmitting ? 'Submitting...' : 'Join as GoosePro'}
                 </button>
               </form>
             )}

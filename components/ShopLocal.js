@@ -1,78 +1,33 @@
 function ShopLocal() {
   try {
-    const [goosepreneurEmail, setGoosepreneurEmail] = React.useState('');
-    const [shopperEmail, setShopperEmail] = React.useState('');
-    const [isSubmittingVendor, setIsSubmittingVendor] = React.useState(false);
-    const [isSubmittingShopper, setIsSubmittingShopper] = React.useState(false);
-    const [showVendorSuccess, setShowVendorSuccess] = React.useState(false);
-    const [showShopperSuccess, setShowShopperSuccess] = React.useState(false);
-
+    useScrollAnimation();
+    
     const features = [
       { icon: 'apple', text: 'Fresh farm produce' },
       { icon: 'shopping-basket', text: 'Lifestyle and home products' },
       { icon: 'package', text: 'Groceries & artisanal goods' }
     ];
 
-    const handleVendorWaitlist = async (e) => {
-      e.preventDefault();
-      setIsSubmittingVendor(true);
-      try {
-        await trickleCreateObject('goosemarket_waitlist', {
-          Email: goosepreneurEmail,
-          Role: 'Goosepreneur',
-          JoinedAt: new Date().toISOString()
-        });
-        setShowVendorSuccess(true);
-        setGoosepreneurEmail('');
-        setTimeout(() => setShowVendorSuccess(false), 3000);
-      } catch (error) {
-        console.error('Error joining waitlist:', error);
-        alert('Failed to join waitlist. Please try again.');
-      } finally {
-        setIsSubmittingVendor(false);
-      }
-    };
-
-    const handleShopperWaitlist = async (e) => {
-      e.preventDefault();
-      setIsSubmittingShopper(true);
-      try {
-        await trickleCreateObject('goosemarket_waitlist', {
-          Email: shopperEmail,
-          Role: 'Goose Shopper',
-          JoinedAt: new Date().toISOString()
-        });
-        setShowShopperSuccess(true);
-        setShopperEmail('');
-        setTimeout(() => setShowShopperSuccess(false), 3000);
-      } catch (error) {
-        console.error('Error joining waitlist:', error);
-        alert('Failed to join waitlist. Please try again.');
-      } finally {
-        setIsSubmittingShopper(false);
-      }
-    };
-
     return (
       <div data-name="shop-local" data-file="components/ShopLocal.js">
-        <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-orange-50 to-white">
+        <section className="pt-32 pb-16 px-6 transition-colors duration-300" style={{background: 'linear-gradient(to bottom right, rgba(245, 166, 35, 0.1), var(--background))'}}>
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl font-bold mb-6">Shop Local with GooseMarket</h1>
-            <p className="text-xl text-[var(--text-secondary)]">Your trusted e-Marketplace for authentic local products</p>
+            <h1 className="text-5xl font-bold mb-6" data-animate="animate-fadeInUp">Shop Local with GooseMarket</h1>
+            <p className="text-xl text-[var(--text-secondary)]" data-animate="animate-fadeInUp">Your trusted e-Marketplace for authentic local products</p>
           </div>
         </section>
 
-        <section className="section-padding bg-gradient-to-br from-[var(--primary-color)]/5 to-white">
+        <section className="section-padding transition-colors duration-300" style={{background: 'linear-gradient(to bottom right, rgba(168, 230, 207, 0.05), var(--background))'}}>
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative">
+            <div className="relative" data-animate="animate-slideInLeft">
               <div className="absolute -top-4 -left-4 bg-yellow-400 text-[var(--accent-color)] px-4 py-2 rounded-full font-semibold text-sm z-10">
                 Coming Soon
               </div>
               <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=800&q=80" alt="Local Market" className="rounded-3xl shadow-2xl" />
             </div>
             
-            <div className="space-y-6">
+            <div className="space-y-6" data-animate="animate-slideInRight">
               <div className="flex items-center gap-3">
                 <div className="icon-shopping-cart text-4xl" style={{color: 'var(--primary-color)'}}></div>
                 <h2 className="text-4xl font-bold">Shop Local with GooseMarket</h2>
@@ -111,18 +66,9 @@ function ShopLocal() {
                   <p className="text-[var(--text-secondary)] mb-4">
                     Become a vendor and reach new customers on GooseMarket.
                   </p>
-                  {showVendorSuccess ? (
-                    <div className="text-center py-2">
-                      <p className="text-green-600 font-medium">✓ You're on the waitlist!</p>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleVendorWaitlist} className="flex gap-2">
-                      <input type="email" placeholder="Your Email" value={goosepreneurEmail} onChange={(e) => setGoosepreneurEmail(e.target.value)} className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-[var(--primary-color)] text-sm" required />
-                      <button type="submit" disabled={isSubmittingVendor} className="px-6 py-2 rounded-full font-medium text-sm whitespace-nowrap" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
-                        {isSubmittingVendor ? 'Joining...' : 'Join Waitlist'}
-                      </button>
-                    </form>
-                  )}
+                  <a href="https://tally.so/r/WO2a2P" target="_blank" rel="noopener noreferrer" className="block px-6 py-2 rounded-full font-medium text-sm text-center whitespace-nowrap hover:shadow-lg transition-all" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
+                    Join Goosepreneur Waitlist
+                  </a>
                 </div>
               </div>
               
@@ -134,7 +80,7 @@ function ShopLocal() {
         </div>
         </section>
 
-        <section className="section-padding bg-white">
+        <section className="section-padding transition-colors duration-300" style={{backgroundColor: 'var(--background)'}}>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">Join the Waitlist</h2>
             <p className="text-lg text-[var(--text-secondary)] mb-12">
@@ -150,18 +96,9 @@ function ShopLocal() {
                 <p className="text-[var(--text-secondary)] mb-6">
                   Shop authentic local products from verified vendors
                 </p>
-                {showShopperSuccess ? (
-                  <div className="text-center py-4">
-                    <p className="text-green-600 font-medium text-lg">✓ You're on the waitlist!</p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleShopperWaitlist} className="space-y-3">
-                    <input type="email" placeholder="Enter your email" value={shopperEmail} onChange={(e) => setShopperEmail(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                    <button type="submit" disabled={isSubmittingShopper} className="w-full px-6 py-3 rounded-full font-medium" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
-                      {isSubmittingShopper ? 'Joining...' : 'Join Waitlist'}
-                    </button>
-                  </form>
-                )}
+                <a href="https://tally.so/r/1AX0gb" target="_blank" rel="noopener noreferrer" className="block w-full px-6 py-3 rounded-full font-medium text-center hover:shadow-lg transition-all" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
+                  Join GooseShopper Waitlist
+                </a>
               </div>
 
               <div className="bg-gradient-to-br from-orange-50 to-white rounded-2xl p-8 shadow-lg">
@@ -172,18 +109,9 @@ function ShopLocal() {
                 <p className="text-[var(--text-secondary)] mb-6">
                   Sell your products and grow your business online
                 </p>
-                {showVendorSuccess ? (
-                  <div className="text-center py-4">
-                    <p className="text-green-600 font-medium text-lg">✓ You're on the waitlist!</p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleVendorWaitlist} className="space-y-3">
-                    <input type="email" placeholder="Enter your email" value={goosepreneurEmail} onChange={(e) => setGoosepreneurEmail(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" required />
-                    <button type="submit" disabled={isSubmittingVendor} className="w-full px-6 py-3 rounded-full font-medium bg-orange-500 text-white hover:bg-orange-600">
-                      {isSubmittingVendor ? 'Joining...' : 'Join Waitlist'}
-                    </button>
-                  </form>
-                )}
+                <a href="https://tally.so/r/WO2a2P" target="_blank" rel="noopener noreferrer" className="block w-full px-6 py-3 rounded-full font-medium text-center bg-orange-500 text-white hover:bg-orange-600 transition-all">
+                  Join Goosepreneur Waitlist
+                </a>
               </div>
             </div>
           </div>

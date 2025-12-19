@@ -24,6 +24,8 @@ class ErrorBoundary extends React.Component {
 
 function CorporatePage() {
   try {
+    useScrollAnimation();
+    
     const solutions = [
       { title: 'Employee Assistance Programs', icon: 'users', desc: 'Support your team with lifestyle and wellness services' },
       { title: 'Facility Management', icon: 'building', desc: 'Comprehensive office and facility maintenance solutions' },
@@ -34,19 +36,20 @@ function CorporatePage() {
     ];
 
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen transition-colors duration-300" style={{backgroundColor: 'var(--background)'}}>
+        <DarkModeToggle />
         <Header />
         
-        <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-[var(--primary-color)]/10 to-white">
+        <section className="pt-32 pb-16 px-6 transition-colors duration-300" style={{background: 'linear-gradient(to bottom right, rgba(168, 230, 207, 0.1), var(--background))'}}>
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl font-bold mb-6">Smart Solutions for Modern Workplaces</h1>
-            <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
+            <h1 className="text-5xl font-bold mb-6" data-animate="animate-fadeInUp">Smart Solutions for Modern Workplaces</h1>
+            <p className="text-xl text-[var(--text-secondary)] leading-relaxed" data-animate="animate-fadeInUp">
               TaskGoose supports businesses, teams, and executives with tailored productivity and concierge solutions
             </p>
-            <div className="flex justify-center gap-4 mt-8">
-              <button className="px-8 py-4 rounded-full font-medium" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
+            <div className="flex justify-center gap-4 mt-8" data-animate="animate-fadeInUp">
+              <a href="https://tally.so/r/rj5ZKv" target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 rounded-full font-medium hover-lift" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
                 Request Corporate Package
-              </button>
+              </a>
             </div>
           </div>
         </section>
@@ -55,12 +58,12 @@ function CorporatePage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8">
               {solutions.map((solution, idx) => (
-                <div key={idx} className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{backgroundColor: 'var(--primary-color)'}}>
-                    <div className={`icon-${solution.icon} text-2xl text-[var(--accent-color)]`}></div>
+                <div key={idx} data-animate="animate-fadeInUp" style={{animationDelay: `${idx * 0.1}s`}} className="rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift group cursor-pointer" style={{background: 'linear-gradient(to bottom right, var(--hover-bg), var(--card-background))'}}>
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{backgroundColor: 'var(--primary-color)'}}>
+                    <div className={`icon-${solution.icon} text-2xl text-white`}></div>
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{solution.title}</h3>
-                  <p className="text-[var(--text-secondary)]">{solution.desc}</p>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-[var(--primary-color)] transition-colors duration-300">{solution.title}</h3>
+                  <p className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors duration-300">{solution.desc}</p>
                 </div>
               ))}
             </div>

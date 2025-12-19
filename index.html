@@ -1,24 +1,67 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskGoose - Task Smarter, Zero Stress | AI-Driven Lifestyle & Productivity Platform</title>
-    <meta name="description" content="TaskGoose is an AI-driven task automation and lifestyle management platform connecting individuals, businesses, and service providers in Nigeria and beyond.">
-    <meta name="keywords" content="task outsourcing, lifestyle management, AI productivity, home services Nigeria, concierge services, TaskGoose">
-    <meta property="og:title" content="TaskGoose - Task Smarter, Zero Stress">
-    <meta property="og:description" content="AI-driven lifestyle and productivity platform for individuals, businesses, and service providers.">
-    <meta name="twitter:title" content="TaskGoose - Task Smarter, Zero Stress">
-    <meta name="twitter:description" content="AI-driven lifestyle and productivity platform for individuals, businesses, and service providers.">
+    <title>TaskGoose: AI-Driven Task &amp; Professional Services Marketplace | Task Smarter, Zero Stress.</title>
+    <meta name="description" content="Book trusted local help for all your daily needs. Find vetted professionals for Cleaning, Laundry, Home Management, Handyman services, Gardening, Hospital Bedside Care, Errand running &amp; more. TaskGoose, your No. 1 Everyday Task &amp; Home Support Marketplace. AI-driven platform simplifying daily living.">
+    <meta name="keywords" content="task outsourcing Nigeria, lifestyle management Lagos, AI productivity app, home services Nigeria, concierge services Lagos, home care Nigeria, AI task app, errand service Lagos, cleaning services Nigeria, cleaners Lagos, interior decor Nigeria, chef services Lagos, relocation services Lagos, beauty services Nigeria, pet care Lagos, home repairs Nigeria, plumber Lagos, electrician Lagos, handyman Nigeria, elderly care Lagos, childcare Nigeria, task automation app, smart home Nigeria">
+    <meta property="og:title" content="TaskGoose: AI-Driven Task &amp; Professional Services Marketplace | Task Smarter, Zero Stress.">
+    <meta property="og:description" content="Book trusted local help for all your daily needs. Find vetted professionals for Cleaning, Laundry, Home Management, Handyman services, Gardening, Hospital Bedside Care, Errand running &amp; more. TaskGoose, your No. 1 Everyday Task &amp; Home Support Marketplace. AI-driven platform simplifying daily living.">
+    <meta name="twitter:title" content="TaskGoose: AI-Driven Task &amp; Professional Services Marketplace | Task Smarter, Zero Stress.">
+    <meta name="twitter:description" content="Book trusted local help for all your daily needs. Find vetted professionals for Cleaning, Laundry, Home Management, Handyman services, Gardening, Hospital Bedside Care, Errand running &amp; more. TaskGoose, your No. 1 Everyday Task &amp; Home Support Marketplace. AI-driven platform simplifying daily living.">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <script src="https://resource.trickle.so/vendor_lib/unpkg/react@18/umd/react.production.min.js"></script>
     <script src="https://resource.trickle.so/vendor_lib/unpkg/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://resource.trickle.so/vendor_lib/unpkg/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://resource.trickle.so/vendor_lib/unpkg/lucide-static@0.516.0/font/lucide.css" rel="stylesheet">
 
+    <!-- Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- Meta Pixel -->
+    <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '000000000000000');
+        fbq('track', 'PageView');
+    </script>
+    <noscript></noscript>
+</head>
+
+<body><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=000000000000000&amp;ev=PageView&amp;noscript=1">
+
     <style type="text/tailwindcss">
-    @layer theme {
+        @layer theme {
         :root {
             --primary-color: #A8E6CF;
             --secondary-color: #2D3748;
@@ -26,31 +69,86 @@
             --text-primary: #1A202C;
             --text-secondary: #4A5568;
             --background: #FFFFFF;
+            --card-background: #FFFFFF;
+            --border-color: #E5E7EB;
+            --hover-bg: #F9FAFB;
+        }
+        
+        .dark {
+            --primary-color: #A8E6CF;
+            --secondary-color: #E5E7EB;
+            --accent-color: #FFFFFF;
+            --text-primary: #F9FAFB;
+            --text-secondary: #D1D5DB;
+            --background: #0F172A;
+            --card-background: #1E293B;
+            --border-color: #334155;
+            --hover-bg: #334155;
         }
     }
 
     @layer base {
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
         body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: var(--text-primary);
+            background-color: var(--background);
+            letter-spacing: -0.01em;
         }
         
         h1, h2, h3, h4, h5, h6 {
-            font-weight: 600;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
         }
+        
+        h1 { font-size: 3.5rem; line-height: 1.1; }
+        h2 { font-size: 2.5rem; line-height: 1.2; }
     }
 
     @layer components {
+        /* Image masking for service categories to hide Gemini logo */
+        .service-category-image {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-category-image img {
+            object-position: center 60%;
+            transform: scale(1.15);
+        }
+        
+        /* Specific masking for images with Gemini logo in bottom right */
+        .mask-bottom-right img {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 85%);
+        }
+        
         .btn-primary {
-            @apply px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl;
+            @apply px-8 py-4 rounded-full font-medium shadow-lg;
             background-color: var(--primary-color);
             color: var(--accent-color);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(168, 230, 207, 0.4);
         }
         
         .btn-secondary {
-            @apply px-8 py-4 rounded-full font-medium transition-all duration-300 border-2;
+            @apply px-8 py-4 rounded-full font-medium border-2;
             border-color: var(--primary-color);
             color: var(--accent-color);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px) scale(1.03);
+            background-color: var(--primary-color);
+            box-shadow: 0 15px 35px rgba(168, 230, 207, 0.3);
         }
         
         .section-padding {
@@ -58,37 +156,225 @@
         }
 
         .animate-fadeIn {
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-slideInRight {
+            animation: slideInRight 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .animate-bounce {
-            animation: bounce 2s infinite;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-slow {
+            animation: pulseSlow 3s ease-in-out infinite;
+        }
+
+        .hover-lift {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .parallax-section {
+            transition: transform 0.3s ease-out;
+        }
+
+        .hover-glow {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-glow:hover {
+            box-shadow: 0 0 40px rgba(168, 230, 207, 0.6);
+            transform: scale(1.05);
+        }
+
+        .hover-rotate {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-rotate:hover {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        button, a {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .image-reveal {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .image-reveal.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .text-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .text-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stagger-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @keyframes slideInLeft {
+            from { 
+                opacity: 0; 
+                transform: translateX(-60px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+        }
+
+        @keyframes slideInRight {
+            from { 
+                opacity: 0; 
+                transform: translateX(60px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulseSlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes popBounce {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     </style>
-</head>
-<body>
+    <meta property="og:image" content="https://app.trickle.so/storage/app/TASKGOOSE (1).png">
+    <meta name="twitter:image" content="https://app.trickle.so/storage/app/TASKGOOSE (1).png">
+
+
+
     <div id="root"></div>
+    <script type="text/babel" src="utils/scrollAnimations.js"></script>
+    <script type="text/babel" src="components/DarkModeToggle.js"></script>
     <script type="text/babel" src="components/AnimatedGoose.js"></script>
+    <script type="text/babel" src="components/ReferralBanner.js"></script>
+    <script type="text/babel" src="components/Goosistant.js"></script>
+    <script type="text/babel" src="components/CategoryModal.js"></script>
+    <script type="text/babel" src="components/CategoryBubblesModal.js"></script>
+    <script type="text/babel" src="components/UserGuideModal.js"></script>
     <script type="text/babel" src="components/BookingModal.js"></script>
     <script type="text/babel" src="components/SignupModal.js"></script>
+    <script type="text/babel" src="components/SuccessMetrics.js"></script>
+    <script type="text/babel" src="components/TrustedBy.js"></script>
+    <script type="text/babel" src="components/AIFeatures.js"></script>
+    <script type="text/babel" src="components/SignupCTA.js"></script>
+    <script type="text/babel" src="components/Newsletter.js"></script>
     <script type="text/babel" src="components/Header.js"></script>
     <script type="text/babel" src="components/Hero.js"></script>
     <script type="text/babel" src="components/UserGroups.js"></script>
     <script type="text/babel" src="components/Categories.js"></script>
     <script type="text/babel" src="components/HowItWorks.js"></script>
+    <script type="text/babel" src="components/AIFeatures.js"></script>
+    <script type="text/babel" src="components/TrustedBy.js"></script>
     <script type="text/babel" src="components/Testimonials.js"></script>
+    <script type="text/babel" src="components/Newsletter.js"></script>
     <script type="text/babel" src="components/Footer.js"></script>
     <script type="text/babel" src="app.js"></script>
+
+
+
+
+
+
+
+
+
 </body>
+
 </html>

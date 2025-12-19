@@ -127,7 +127,7 @@ function FAQAccordion() {
       <section className="py-16 px-6" style={{backgroundColor: 'var(--faq-bg)'}}>
         <div className="max-w-5xl mx-auto space-y-8">
           {faqData.map((category, catIdx) => (
-            <div key={catIdx} className="bg-white rounded-3xl overflow-hidden shadow-lg">
+            <div key={catIdx} className="faq-section scroll-reveal rounded-3xl overflow-hidden shadow-lg transition-colors duration-300" style={{backgroundColor: 'var(--card-background)'}}>
               <div className="grid md:grid-cols-3 gap-0">
                 <div className="md:col-span-1 p-8" style={{backgroundColor: category.color + '20'}}>
                   <div className="flex items-center gap-3 mb-4">
@@ -143,7 +143,7 @@ function FAQAccordion() {
                   {category.questions.map((item, qIdx) => {
                     const currentIndex = questionIndex++;
                     return (
-                      <div key={qIdx} className="border-b border-gray-200 last:border-0">
+                      <div key={qIdx} className="border-b last:border-0 transition-colors duration-300" style={{borderColor: 'var(--border-color)'}}>
                         <button onClick={() => toggleAccordion(currentIndex)} className="w-full py-4 flex justify-between items-center text-left hover:text-[var(--orange-accent)] transition-colors">
                           <span className="font-semibold text-lg pr-4">{item.q}</span>
                           <div className={`icon-${openIndex === currentIndex ? 'chevron-up' : 'chevron-down'} text-xl flex-shrink-0`} style={{color: 'var(--orange-accent)'}}></div>

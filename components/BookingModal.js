@@ -18,12 +18,14 @@ function BookingModal({ isOpen, onClose, category = '' }) {
     const [showSuccess, setShowSuccess] = React.useState(false);
 
     const serviceCategories = [
-      { name: 'HomeCare', icon: 'home', services: ['Deep Cleaning', 'Laundry & Ironing', 'Home Organization', 'Meal Preparation', 'Yard Maintenance', 'Handyman & Repairs'] },
-      { name: 'FixIt', icon: 'wrench', services: ['Plumbing', 'Electrical Repairs', 'Furniture Assembly', 'Appliance Fixes', 'Painting & Polishing', 'Carpentry'] },
-      { name: 'FamilyCare', icon: 'heart', services: ['Elderly Care', 'Childcare', 'Special Needs Support', 'Disability Care', 'Hospital Bedside Watch', 'Medical Assistance'] },
-      { name: 'MoveEase', icon: 'truck', services: ['Grocery & Delivery', 'Pet Care', 'House Sitting', 'Package Pickup', 'Travel & Event Assistance', 'Dry Cleaning'] },
-      { name: 'BizSupport', icon: 'briefcase', services: ['Admin Support', 'Data Entry', 'Customer Service', 'Office Management'] },
-      { name: 'GooseLife Concierge', icon: 'sparkles', services: ['Personal Shopping', 'Event Planning', 'Travel Coordination', 'Lifestyle Management'] }
+      { name: 'HomeCare', icon: 'home', services: ['Cleaning & Housekeeping', 'Home Management', 'House Sitting', 'Meal Prep', 'Interior Decorators', 'Gardening'] },
+      { name: 'Fix-It', icon: 'wrench', services: ['Handymen', 'Electricians', 'Plumbers', 'Painters', 'Repairs & Maintenance', 'Yard Maintainers'] },
+      { name: 'Beauty & Lifestyle', icon: 'sparkles', services: ['Hair Vendors', 'Hair Stylists/Salons', 'Makeup Artists', 'Nail Technicians', 'Spa Services'] },
+      { name: 'FamilyCare', icon: 'heart', services: ['Elderly Care', 'Hospital Bed Watch', 'Special Needs Support'] },
+      { name: 'MoveEase', icon: 'truck', services: ['Home Relocation', 'Office Relocation', 'Packing & Unpacking', 'Furniture Assembly', 'Move-In/Out Cleaning'] },
+      { name: 'GooseLife Errands', icon: 'shopping-bag', services: ['Grocery Shopping & Delivery', 'Errands', 'Medicine Pickup', 'Event Planning', 'Travel Coordination', 'Dry Cleaning'] },
+      { name: 'GoosePaw', icon: 'dog', services: ['Pet Sitting', 'Pet Walking', 'Pet Grooming'] },
+      { name: 'SafeNest', icon: 'shield-check', services: ['Smart Home Installation', 'Surveillance Setup', 'Security System Maintenance', 'Safety Management'] }
     ];
 
     const selectedCategoryData = serviceCategories.find(cat => cat.name === formData.category);
@@ -56,6 +58,10 @@ function BookingModal({ isOpen, onClose, category = '' }) {
           CreatedByEmail: formData.email
         });
         
+        const whatsappMessage = `*New Task Booking*%0A%0A*Name:* ${formData.fullName}%0A*Email:* ${formData.email}%0A*Category:* ${formData.category}%0A*Service:* ${formData.specificService}%0A*Description:* ${formData.taskDescription}%0A*Location:* ${formData.taskLocation}%0A*Date:* ${formData.preferredDate}%0A*Time:* ${formData.preferredTime}%0A*Size:* ${formData.taskSize}%0A*Complexity:* ${formData.complexity}`;
+        
+        window.open(`https://wa.me/2348133522599?text=${whatsappMessage}`, '_blank');
+        
         setShowSuccess(true);
         setTimeout(() => {
           onClose();
@@ -75,10 +81,10 @@ function BookingModal({ isOpen, onClose, category = '' }) {
 
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
-        <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transition-colors duration-300" style={{backgroundColor: 'var(--card-background)'}} onClick={(e) => e.stopPropagation()}>
           <div className="p-8">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold">Book a Task</h2>
+              <h2 className="text-3xl font-bold">Request a Task</h2>
               <button onClick={onClose} className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100">
                 <div className="icon-x text-2xl"></div>
               </button>
@@ -97,7 +103,8 @@ function BookingModal({ isOpen, onClose, category = '' }) {
               <div>
                 {step === 1 && (
                   <div>
-                    <p className="text-xl mb-6">👋 Welcome, Smart Tasker! Which task would you like to book today?</p>
+                    <p className="text-xl mb-4">👋 Welcome, Smart Tasker! Which task would you like to book today?</p>
+                    <p className="text-sm italic mb-6" style={{color: 'var(--primary-color)'}}>Your peace matters. Let's lighten your load.</p>
                     <div className="grid grid-cols-2 gap-4">
                       {serviceCategories.map((cat, idx) => (
                         <button key={idx} onClick={() => { setFormData({...formData, category: cat.name}); setStep(2); }} className="p-6 rounded-2xl border-2 border-gray-200 hover:border-[var(--primary-color)] transition-all text-left">
@@ -154,7 +161,7 @@ function BookingModal({ isOpen, onClose, category = '' }) {
                       </div>
                       <input type="text" placeholder="Task Location" value={formData.taskLocation} onChange={(e) => setFormData({...formData, taskLocation: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-[var(--primary-color)]" />
                       <button type="submit" disabled={isSubmitting} className="w-full px-6 py-4 rounded-full font-medium text-lg" style={{backgroundColor: 'var(--primary-color)', color: 'var(--accent-color)'}}>
-                        {isSubmitting ? 'Submitting...' : 'Submit Task'}
+                        {isSubmitting ? 'Submitting...' : 'Submit Request'}
                       </button>
                     </form>
                   </div>
